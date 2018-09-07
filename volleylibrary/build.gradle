@@ -1,15 +1,14 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdk
 
     // 默认配置
     defaultConfig {
-        applicationId rootProject.ext.android.applicationId
         minSdkVersion rootProject.ext.android.minSdk
         targetSdkVersion rootProject.ext.android.targetSdk
-        versionCode rootProject.ext.android.versionCode
-        versionName rootProject.ext.android.versionName
+        versionCode 1
+        versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -26,12 +25,12 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     // support
     implementation rootProject.ext.dependencies["androidSupportV7"]
-    implementation rootProject.ext.dependencies["recyclerviewV7"]
-    implementation rootProject.ext.dependencies["androidSupportConstraint"]
     // test
     testImplementation rootProject.ext.dependencies["junitSupport"]
     androidTestImplementation rootProject.ext.dependencies["supportTestRunner"]
     androidTestImplementation rootProject.ext.dependencies["supportTestEspresso"]
-    // Volley Library
-    implementation project(':volleylibrary')
+    // volley
+    implementation rootProject.ext.dependencies["volley"]
+    // gson
+    implementation rootProject.ext.dependencies["gson"]
 }
