@@ -1,7 +1,6 @@
 package com.renj.volleylibrary;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -102,7 +101,6 @@ public class VHttpUtil {
      * @param listener 监听
      */
     public void byteArrayData(int method, String url, final Map<String, String> params, Object tag, final ResultListener<byte[]> listener) {
-        Log.d("mVHttpUtil", "NetWorkUtils.getCurrentNetworkState(mContext):" + NetWorkUtils.getCurrentNetworkState(mContext));
         if (!NetWorkUtils.isConnectedByState(mContext)) {
             if (listener != null) {
                 listener.onNetWork();
