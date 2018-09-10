@@ -192,7 +192,6 @@ public class VHttpUtil {
      * @param listener 监听
      */
     public void stringData(int method, String url, final Map<String, String> params, Object tag, final ResultListener<String> listener) {
-        Log.d("mVHttpUtil", "NetWorkUtils.getCurrentNetworkState(mContext):" + NetWorkUtils.getCurrentNetworkState(mContext));
         if (!NetWorkUtils.isConnectedByState(mContext)) {
             if (listener != null) {
                 listener.onNetWork();
@@ -283,7 +282,6 @@ public class VHttpUtil {
      * @param listener    监听
      */
     public void jsonObjectData(int method, String url, final Map<String, String> params, JSONObject jsonRequest, Object tag, final ResultListener<JSONObject> listener) {
-        Log.d("mVHttpUtil", "NetWorkUtils.getCurrentNetworkState(mContext):" + NetWorkUtils.getCurrentNetworkState(mContext));
         if (!NetWorkUtils.isConnectedByState(mContext)) {
             if (listener != null) {
                 listener.onNetWork();
@@ -373,7 +371,6 @@ public class VHttpUtil {
      * @param listener 监听
      */
     public void jsonArrayData(String url, Object tag, final ResultListener<JSONArray> listener) {
-        Log.d("mVHttpUtil", "NetWorkUtils.getCurrentNetworkState(mContext):" + NetWorkUtils.getCurrentNetworkState(mContext));
         if (!NetWorkUtils.isConnectedByState(mContext)) {
             if (listener != null) {
                 listener.onNetWork();
@@ -414,7 +411,6 @@ public class VHttpUtil {
      * @param <T>      泛型 <b>注意：T extends BaseBean<b/>
      */
     public <T extends BaseBean> void beanData(int method, String url, final Map<String, String> params, Class<T> clazz, Object tag, final ResultListener<T> listener) {
-        Log.d("mVHttpUtil", "NetWorkUtils.getCurrentNetworkState(mContext):" + NetWorkUtils.getCurrentNetworkState(mContext));
         if (!NetWorkUtils.isConnectedByState(mContext)) {
             if (listener != null) {
                 listener.onNetWork();
@@ -512,7 +508,6 @@ public class VHttpUtil {
      * @param listener 监听
      */
     public void postFormData(String url, Map<String, Object> params, Charset charSet, Object tag, final ResultListener<String> listener) {
-        Log.d("mVHttpUtil", "NetWorkUtils.getCurrentNetworkState(mContext):" + NetWorkUtils.getCurrentNetworkState(mContext));
         if (!NetWorkUtils.isConnectedByState(mContext)) {
             if (listener != null) {
                 listener.onNetWork();
@@ -560,7 +555,6 @@ public class VHttpUtil {
      * @param listener   监听
      */
     public void postSingleMultipartData(String url, Map<String, Object> params, FileEntity fileEntity, Charset charSet, Object tag, final ResultListener<String> listener) {
-        Log.d("mVHttpUtil", "NetWorkUtils.getCurrentNetworkState(mContext):" + NetWorkUtils.getCurrentNetworkState(mContext));
         if (!NetWorkUtils.isConnectedByState(mContext)) {
             if (listener != null) {
                 listener.onNetWork();
@@ -595,7 +589,6 @@ public class VHttpUtil {
      * @param listener       监听
      */
     public void postMultipartData(String url, Map<String, Object> params, List<FileEntity> fileEntityList, Charset charSet, Object tag, final ResultListener<String> listener) {
-        Log.d("mVHttpUtil", "NetWorkUtils.getCurrentNetworkState(mContext):" + NetWorkUtils.getCurrentNetworkState(mContext));
         if (!NetWorkUtils.isConnectedByState(mContext)) {
             if (listener != null) {
                 listener.onNetWork();

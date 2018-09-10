@@ -1,7 +1,5 @@
 package com.renj.volleylibrary;
 
-import com.android.volley.VolleyError;
-
 /**
  * ======================================================================
  * <p/>
@@ -33,5 +31,5 @@ public interface ResultListener<T> {
      *
      * @param e 错误对象
      */
-    void onError(VolleyError e);
+    void onError(Throwable e);
 }

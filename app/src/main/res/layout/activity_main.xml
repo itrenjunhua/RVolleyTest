@@ -20,20 +20,6 @@
         android:textAllCaps="false"/>
 
     <Button
-        android:id="@+id/bt_byte"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="获取Byte[]数据"
-        android:textAllCaps="false"/>
-
-    <Button
-        android:id="@+id/bt_form"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="提交表单数据"
-        android:textAllCaps="false"/>
-
-    <Button
         android:id="@+id/bt_img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

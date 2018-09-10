@@ -7,14 +7,12 @@ import android.view.View;
 import android.widget.Button;
 
 import com.renj.volleytest.demo.BeanDataActivity;
-import com.renj.volleytest.demo.BytesDataActivity;
-import com.renj.volleytest.demo.FormDataActivity;
 import com.renj.volleytest.demo.ImageDataActivity;
 import com.renj.volleytest.demo.StringDataActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btString, btBean, btBytes, btForm, btImg;
+    private Button btString, btBean,  btImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +21,6 @@ public class MainActivity extends AppCompatActivity {
 
         btString = findViewById(R.id.bt_string);
         btBean = findViewById(R.id.bt_bean);
-        btBytes = findViewById(R.id.bt_byte);
-        btForm = findViewById(R.id.bt_form);
         btImg = findViewById(R.id.bt_img);
 
         // 获取 String 类型数据
@@ -41,24 +37,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, BeanDataActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        // 获取 Byte[] 类型数据
-        btBytes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, BytesDataActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        // 上传表单数据
-        btForm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, FormDataActivity.class);
                 startActivity(intent);
             }
         });

@@ -18,11 +18,11 @@ import com.android.volley.toolbox.ImageLoader;
  * <p/>
  * ======================================================================
  */
-public class VImageCache implements ImageLoader.ImageCache {
+/*public*/ class VImageCache implements ImageLoader.ImageCache {
     // 使用Android提供的LruCache类
     private static LruCache<String, Bitmap> mVolleyImgCache;
 
-    public VImageCache() {
+    VImageCache() {
         // 使用应用程序可用的最大内存的1/8作为缓存图片的内存缓存
         int volleyImgMaxMemory = (int) (Runtime.getRuntime().maxMemory() / 8);
         mVolleyImgCache = new LruCache<String, Bitmap>(volleyImgMaxMemory) {
