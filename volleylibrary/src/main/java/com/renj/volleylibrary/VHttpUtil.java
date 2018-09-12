@@ -45,8 +45,8 @@ import java.util.Map;
  * ======================================================================
  */
 public class VHttpUtil {
-    private static RequestQueue mRequestQueue;
-    private static Context mContext;
+    public static RequestQueue mRequestQueue;
+    public static Context mContext;
     private static VHttpUtil mVHttpUtil;
 
     private VHttpUtil() {

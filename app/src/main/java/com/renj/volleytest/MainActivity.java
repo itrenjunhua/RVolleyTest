@@ -12,7 +12,7 @@ import com.renj.volleytest.demo.StringDataActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btString, btBean,  btImg;
+    private Button btString, btBean, btImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
