@@ -5,10 +5,11 @@ import android.support.annotation.NonNull;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.renj.volleylibrary.NetWorkUtils;
 import com.renj.volleylibrary.ResultCallBack;
 import com.renj.volleylibrary.VHttpUtil;
+import com.renj.volleylibrary.entity.BaseBean;
+import com.renj.volleylibrary.request.BeanRequest;
 
 import java.util.Map;
 
@@ -26,42 +27,32 @@ import java.util.Map;
  * <p>
  * ======================================================================
  */
-public class BaseRequest {
-    public interface Method {
-        int DEPRECATED_GET_OR_POST = -1;
-        int GET = 0;
-        int POST = 1;
-        int PUT = 2;
-        int DELETE = 3;
-        int HEAD = 4;
-        int OPTIONS = 5;
-        int TRACE = 6;
-        int PATCH = 7;
-    }
+public class RBeanRequest<T extends BaseBean> implements IRequest<T> {
 
     private Builder builder;
 
-    public BaseRequest(Builder builder) {
+    public RBeanRequest(Builder builder) {
         this.builder = builder;
     }
 
-    public ResultCallBack<String> execute() {
-        final ResultCallBack<String> stringResultCallBack = ResultCallBack.<String>create();
+    @Override
+    public ResultCallBack<T> execute() {
+        final ResultCallBack<T> beanResultCallBack = ResultCallBack.<T>create();
 
         if (!NetWorkUtils.isConnectedByState(VHttpUtil.mContext)) {
-            stringResultCallBack.onNetWork();
-            return stringResultCallBack;
+            beanResultCallBack.onNetWork();
+            return beanResultCallBack;
         }
 
-        StringRequest stringRequest = new StringRequest(builder.method, builder.url, new Response.Listener<String>() {
+        BeanRequest<T> beanRequest = new BeanRequest<T>(builder.method, builder.url, builder.clazz, new Response.Listener<T>() {
             @Override
-            public void onResponse(String response) {
-                stringResultCallBack.onSucceed(response);
+            public void onResponse(T response) {
+                beanResultCallBack.onSucceed(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                stringResultCallBack.onError(error);
+                beanResultCallBack.onError(error);
             }
         }) {
             @Override
@@ -81,22 +72,23 @@ public class BaseRequest {
             }
         };
 
-        if (builder.tag != null) stringRequest.setTag(builder.tag);
-        VHttpUtil.mRequestQueue.add(stringRequest);
+        if (builder.tag != null) beanRequest.setTag(builder.tag);
+        VHttpUtil.mRequestQueue.add(beanRequest);
 
-        return stringResultCallBack;
+        return beanResultCallBack;
     }
 
-    public static Builder create(){
+    public static Builder create() {
         return new Builder();
     }
 
-    public static class Builder {
+    public static class Builder<T extends BaseBean> {
         private int method = Method.GET;
         private String url;
         private Object tag;
         private Map<String, String> headers;
         private Map<String, String> params;
+        private Class<T> clazz;
 
         public Builder method(int method) {
             this.method = method;
@@ -123,8 +115,13 @@ public class BaseRequest {
             return this;
         }
 
-        public BaseRequest build() {
-            return new BaseRequest(this);
+        public Builder clazz(Class<T> clazz) {
+            this.clazz = clazz;
+            return this;
+        }
+
+        public RBeanRequest build() {
+            return new RBeanRequest(this);
         }
     }
 }
