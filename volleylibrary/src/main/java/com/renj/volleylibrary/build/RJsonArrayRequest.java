@@ -5,12 +5,12 @@ import android.support.annotation.NonNull;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.renj.volleylibrary.NetWorkUtils;
 import com.renj.volleylibrary.ResultCallBack;
 import com.renj.volleylibrary.VHttpUtil;
 
-import org.json.JSONObject;
+import org.json.JSONArray;
 
 import java.util.Map;
 
@@ -28,26 +28,26 @@ import java.util.Map;
  * <p>
  * ======================================================================
  */
-public class RJsonObjectRequest implements IRequest<JSONObject> {
+public class RJsonArrayRequest implements IRequest<JSONArray> {
 
     private Builder builder;
 
-    public RJsonObjectRequest(Builder builder) {
+    public RJsonArrayRequest(Builder builder) {
         this.builder = builder;
     }
 
     @Override
-    public ResultCallBack<JSONObject> execute() {
-        final ResultCallBack<JSONObject> beanResultCallBack = ResultCallBack.<JSONObject>create();
+    public ResultCallBack<JSONArray> execute() {
+        final ResultCallBack<JSONArray> beanResultCallBack = ResultCallBack.<JSONArray>create();
 
         if (!NetWorkUtils.isConnectedByState(VHttpUtil.mContext)) {
             beanResultCallBack.onNetWork();
             return beanResultCallBack;
         }
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(builder.method, builder.url, builder.jsonRequest, new Response.Listener<JSONObject>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(builder.url, new Response.Listener<JSONArray>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(JSONArray response) {
                 if (beanResultCallBack != null) {
                     beanResultCallBack.onSucceed(response);
                 }
@@ -76,8 +76,8 @@ public class RJsonObjectRequest implements IRequest<JSONObject> {
                 return super.getParams();
             }
         };
-        if (builder.tag != null) jsonObjectRequest.setTag(builder.tag);
-        VHttpUtil.mRequestQueue.add(jsonObjectRequest);
+        if (builder.tag != null) jsonArrayRequest.setTag(builder.tag);
+        VHttpUtil.mRequestQueue.add(jsonArrayRequest);
 
         return beanResultCallBack;
     }
@@ -87,17 +87,10 @@ public class RJsonObjectRequest implements IRequest<JSONObject> {
     }
 
     public static class Builder {
-        private int method = Method.GET;
         private String url;
         private Object tag;
         private Map<String, String> headers;
         private Map<String, String> params;
-        private JSONObject jsonRequest;
-
-        public Builder method(int method) {
-            this.method = method;
-            return this;
-        }
 
         public Builder url(@NonNull String url) {
             this.url = url;
@@ -119,13 +112,8 @@ public class RJsonObjectRequest implements IRequest<JSONObject> {
             return this;
         }
 
-        public Builder jsonRequest(JSONObject jsonRequest) {
-            this.jsonRequest = jsonRequest;
-            return this;
-        }
-
-        public RJsonObjectRequest build() {
-            return new RJsonObjectRequest(this);
+        public RJsonArrayRequest build() {
+            return new RJsonArrayRequest(this);
         }
     }
 }
