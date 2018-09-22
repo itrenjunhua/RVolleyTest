@@ -40,6 +40,12 @@ public class FileEntity {
     public FileEntity() {
     }
 
+    public FileEntity(String mName, String mFileName, File mFile) {
+        this.mName = mName;
+        this.mFileName = mFileName;
+        this.mFile = mFile;
+    }
+
     public FileEntity(String mName, String mFileName, File mFile, String mMime) {
         this.mName = mName;
         this.mFileName = mFileName;

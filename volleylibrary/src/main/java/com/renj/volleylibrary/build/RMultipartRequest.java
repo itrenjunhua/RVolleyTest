@@ -8,9 +8,12 @@ import com.android.volley.VolleyError;
 import com.renj.volleylibrary.NetWorkUtils;
 import com.renj.volleylibrary.ResultCallBack;
 import com.renj.volleylibrary.VHttpUtil;
-import com.renj.volleylibrary.request.FormRequest;
+import com.renj.volleylibrary.entity.FileEntity;
+import com.renj.volleylibrary.request.MultipartRequest;
 
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,11 +30,11 @@ import java.util.Map;
  * <p>
  * ======================================================================
  */
-public class RFormRequest implements IRequest<String> {
+public class RMultipartRequest implements IRequest<String> {
 
     private Builder builder;
 
-    public RFormRequest(Builder builder) {
+    public RMultipartRequest(Builder builder) {
         this.builder = builder;
     }
 
@@ -44,12 +47,33 @@ public class RFormRequest implements IRequest<String> {
             return stringResultCallBack;
         }
 
-        FormRequest formRequest = new FormRequest(builder.url, builder.formParams, builder.charSet, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                stringResultCallBack.onSucceed(response);
-            }
-        }, new Response.ErrorListener() {
+        /*
+         * builder.fileEntity 和 builder.fileEntityList 可能出现4种情况：
+         * 1.builder.fileEntity 和 builder.fileEntityList 都不为空 => 合并提交
+         * 2.builder.fileEntity 和 builder.fileEntityList 都为空 => 不需要处理，直接提交 空的 builder.fileEntityList 即可
+         * 3.builder.fileEntity 不为空但 builder.fileEntityList 为空 =>
+         *   创建 builder.fileEntityList 对象，将 builder.fileEntity 增加到列表中然后提交 builder.fileEntityList
+         * 4.builder.fileEntity 为空但 builder.fileEntityList 不为空 => 不需要处理，直接提交 builder.fileEntityList 即可
+         */
+
+        // 传递了单个文件，但是没有传递数组文件，将单个文件添加到数组文件中
+        if (builder.fileEntity != null && builder.fileEntityList == null) {
+            builder.fileEntityList = new ArrayList<>();
+            builder.fileEntityList.add(builder.fileEntity);
+        }
+
+        // 传递了单个文件，并且传递的多个文件，合并成数组文件
+        if (builder.fileEntity != null && builder.fileEntityList != null) {
+            builder.fileEntityList.add(builder.fileEntity);
+        }
+
+        MultipartRequest multipartRequest = new MultipartRequest(builder.url, builder.formParams, builder.charSet, builder.fileEntityList,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        stringResultCallBack.onSucceed(response);
+                    }
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 stringResultCallBack.onError(error);
@@ -72,8 +96,8 @@ public class RFormRequest implements IRequest<String> {
             }
         };
 
-        if (builder.tag != null) formRequest.setTag(builder.tag);
-        VHttpUtil.mRequestQueue.add(formRequest);
+        if (builder.tag != null) multipartRequest.setTag(builder.tag);
+        VHttpUtil.mRequestQueue.add(multipartRequest);
 
         return stringResultCallBack;
     }
@@ -87,8 +111,10 @@ public class RFormRequest implements IRequest<String> {
         private Object tag;
         private Map<String, String> headers;
         private Map<String, String> params;
-        private Charset charSet = Charset.defaultCharset();
         private Map<String, Object> formParams;
+        private FileEntity fileEntity;
+        private List<FileEntity> fileEntityList;
+        private Charset charSet = Charset.defaultCharset();
 
         public Builder url(@NonNull String url) {
             this.url = url;
@@ -115,13 +141,23 @@ public class RFormRequest implements IRequest<String> {
             return this;
         }
 
+        public Builder fileEntity(@NonNull FileEntity fileEntity) {
+            this.fileEntity = fileEntity;
+            return this;
+        }
+
+        public Builder fileEntity(@NonNull List<FileEntity> fileEntityList) {
+            this.fileEntityList = fileEntityList;
+            return this;
+        }
+
         public Builder charSet(@NonNull Charset charSet) {
             this.charSet = charSet;
             return this;
         }
 
-        public RFormRequest build() {
-            return new RFormRequest(this);
+        public RMultipartRequest build() {
+            return new RMultipartRequest(this);
         }
     }
 }
