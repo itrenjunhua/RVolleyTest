@@ -1,6 +1,4 @@
-package com.renj.volleylibrary.build;
-
-import com.renj.volleylibrary.ResultCallBack;
+package com.renj.volleylibrary.request;
 
 /**
  * ======================================================================

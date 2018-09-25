@@ -23,7 +23,7 @@ import java.io.UnsupportedEncodingException;
  * <p/>
  * ======================================================================
  */
-public class BeanRequest<T extends BaseBean> extends Request<T> {
+/*public*/ class BeanRequest<T extends BaseBean> extends Request<T> {
     private Response.Listener<T> mListener;
     private Class<T> clazz;
 

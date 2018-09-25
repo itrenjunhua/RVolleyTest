@@ -31,7 +31,7 @@ import java.util.UUID;
  * <p/>
  * ======================================================================
  */
-public class MultipartRequest extends Request<String> {
+/*public*/ class MultipartRequest extends Request<String> {
     private final String MULTIPART_FORM_DATA = "multipart/form-data"; // 数据类型
     private final String BOUNDARY = "---------" + UUID.randomUUID().toString(); // 随机生成边界分隔线
     private final String NEW_LINE = "\r\n"; // 换行符

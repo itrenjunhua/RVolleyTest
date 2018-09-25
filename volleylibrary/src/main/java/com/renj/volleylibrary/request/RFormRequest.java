@@ -1,4 +1,4 @@
-package com.renj.volleylibrary.build;
+package com.renj.volleylibrary.request;
 
 import android.support.annotation.NonNull;
 
@@ -6,10 +6,8 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.renj.volleylibrary.NetWorkUtils;
-import com.renj.volleylibrary.ResultCallBack;
-import com.renj.volleylibrary.VHttpUtil;
-import com.renj.volleylibrary.request.ByteArrayRequest;
 
+import java.nio.charset.Charset;
 import java.util.Map;
 
 /**
@@ -26,32 +24,32 @@ import java.util.Map;
  * <p>
  * ======================================================================
  */
-public class RByteArrayRequest implements IRequest<byte[]> {
+public class RFormRequest implements IRequest<String> {
 
     private Builder builder;
 
-    public RByteArrayRequest(Builder builder) {
+    public RFormRequest(Builder builder) {
         this.builder = builder;
     }
 
     @Override
-    public ResultCallBack<byte[]> execute() {
-        final ResultCallBack<byte[]> bytesResultCallBack = ResultCallBack.<byte[]>create();
+    public ResultCallBack<String> execute() {
+        final ResultCallBack<String> stringResultCallBack = ResultCallBack.<String>create();
 
-        if (!NetWorkUtils.isConnectedByState(VHttpUtil.mContext)) {
-            bytesResultCallBack.onNetWork();
-            return bytesResultCallBack;
+        if (!NetWorkUtils.isConnectedByState(RVHttpUtil.newInstance().getContext())) {
+            stringResultCallBack.onNetWork();
+            return stringResultCallBack;
         }
 
-        ByteArrayRequest byteArrayRequest = new ByteArrayRequest(builder.method, builder.url, new Response.Listener<byte[]>() {
+        FormRequest formRequest = new FormRequest(builder.url, builder.formParams, builder.charSet, new Response.Listener<String>() {
             @Override
-            public void onResponse(byte[] response) {
-                bytesResultCallBack.onSucceed(response);
+            public void onResponse(String response) {
+                stringResultCallBack.onSucceed(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                bytesResultCallBack.onError(error);
+                stringResultCallBack.onError(error);
             }
         }) {
             @Override
@@ -71,10 +69,10 @@ public class RByteArrayRequest implements IRequest<byte[]> {
             }
         };
 
-        if (builder.tag != null) byteArrayRequest.setTag(builder.tag);
-        VHttpUtil.mRequestQueue.add(byteArrayRequest);
+        if (builder.tag != null) formRequest.setTag(builder.tag);
+        RVHttpUtil.newInstance().getRequestQueue().add(formRequest);
 
-        return bytesResultCallBack;
+        return stringResultCallBack;
     }
 
     public static Builder create() {
@@ -82,16 +80,12 @@ public class RByteArrayRequest implements IRequest<byte[]> {
     }
 
     public static class Builder {
-        private int method = Method.GET;
         private String url;
         private Object tag;
         private Map<String, String> headers;
         private Map<String, String> params;
-
-        public Builder method(int method) {
-            this.method = method;
-            return this;
-        }
+        private Charset charSet = Charset.defaultCharset();
+        private Map<String, Object> formParams;
 
         public Builder url(@NonNull String url) {
             this.url = url;
@@ -113,8 +107,18 @@ public class RByteArrayRequest implements IRequest<byte[]> {
             return this;
         }
 
-        public RByteArrayRequest build() {
-            return new RByteArrayRequest(this);
+        public Builder formParams(@NonNull Map<String, Object> formParams) {
+            this.formParams = formParams;
+            return this;
+        }
+
+        public Builder charSet(@NonNull Charset charSet) {
+            this.charSet = charSet;
+            return this;
+        }
+
+        public RFormRequest build() {
+            return new RFormRequest(this);
         }
     }
 }

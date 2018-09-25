@@ -1,4 +1,4 @@
-package com.renj.volleylibrary.build;
+package com.renj.volleylibrary.request;
 
 import android.support.annotation.NonNull;
 
@@ -7,8 +7,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.renj.volleylibrary.NetWorkUtils;
-import com.renj.volleylibrary.ResultCallBack;
-import com.renj.volleylibrary.VHttpUtil;
 
 import org.json.JSONObject;
 
@@ -40,7 +38,7 @@ public class RJsonObjectRequest implements IRequest<JSONObject> {
     public ResultCallBack<JSONObject> execute() {
         final ResultCallBack<JSONObject> beanResultCallBack = ResultCallBack.<JSONObject>create();
 
-        if (!NetWorkUtils.isConnectedByState(VHttpUtil.mContext)) {
+        if (!NetWorkUtils.isConnectedByState(RVHttpUtil.newInstance().getContext())) {
             beanResultCallBack.onNetWork();
             return beanResultCallBack;
         }
@@ -77,7 +75,7 @@ public class RJsonObjectRequest implements IRequest<JSONObject> {
             }
         };
         if (builder.tag != null) jsonObjectRequest.setTag(builder.tag);
-        VHttpUtil.mRequestQueue.add(jsonObjectRequest);
+        RVHttpUtil.newInstance().getRequestQueue().add(jsonObjectRequest);
 
         return beanResultCallBack;
     }

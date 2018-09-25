@@ -1,16 +1,12 @@
-package com.renj.volleylibrary.build;
+package com.renj.volleylibrary.request;
 
 import android.support.annotation.NonNull;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.renj.volleylibrary.NetWorkUtils;
-import com.renj.volleylibrary.ResultCallBack;
-import com.renj.volleylibrary.VHttpUtil;
-
-import org.json.JSONArray;
+import com.renj.volleylibrary.entity.BaseBean;
 
 import java.util.Map;
 
@@ -28,36 +24,32 @@ import java.util.Map;
  * <p>
  * ======================================================================
  */
-public class RJsonArrayRequest implements IRequest<JSONArray> {
+public class RBeanRequest<T extends BaseBean> implements IRequest<T> {
 
     private Builder builder;
 
-    public RJsonArrayRequest(Builder builder) {
+    public RBeanRequest(Builder builder) {
         this.builder = builder;
     }
 
     @Override
-    public ResultCallBack<JSONArray> execute() {
-        final ResultCallBack<JSONArray> beanResultCallBack = ResultCallBack.<JSONArray>create();
+    public ResultCallBack<T> execute() {
+        final ResultCallBack<T> beanResultCallBack = ResultCallBack.<T>create();
 
-        if (!NetWorkUtils.isConnectedByState(VHttpUtil.mContext)) {
+        if (!NetWorkUtils.isConnectedByState(RVHttpUtil.newInstance().getContext())) {
             beanResultCallBack.onNetWork();
             return beanResultCallBack;
         }
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(builder.url, new Response.Listener<JSONArray>() {
+        BeanRequest<T> beanRequest = new BeanRequest<T>(builder.method, builder.url, builder.clazz, new Response.Listener<T>() {
             @Override
-            public void onResponse(JSONArray response) {
-                if (beanResultCallBack != null) {
-                    beanResultCallBack.onSucceed(response);
-                }
+            public void onResponse(T response) {
+                beanResultCallBack.onSucceed(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                if (beanResultCallBack != null) {
-                    beanResultCallBack.onError(error);
-                }
+                beanResultCallBack.onError(error);
             }
         }) {
             @Override
@@ -76,8 +68,9 @@ public class RJsonArrayRequest implements IRequest<JSONArray> {
                 return super.getParams();
             }
         };
-        if (builder.tag != null) jsonArrayRequest.setTag(builder.tag);
-        VHttpUtil.mRequestQueue.add(jsonArrayRequest);
+
+        if (builder.tag != null) beanRequest.setTag(builder.tag);
+        RVHttpUtil.newInstance().getRequestQueue().add(beanRequest);
 
         return beanResultCallBack;
     }
@@ -86,11 +79,18 @@ public class RJsonArrayRequest implements IRequest<JSONArray> {
         return new Builder();
     }
 
-    public static class Builder {
+    public static class Builder<T extends BaseBean> {
+        private int method = Method.GET;
         private String url;
         private Object tag;
         private Map<String, String> headers;
         private Map<String, String> params;
+        private Class<T> clazz;
+
+        public Builder method(int method) {
+            this.method = method;
+            return this;
+        }
 
         public Builder url(@NonNull String url) {
             this.url = url;
@@ -112,8 +112,13 @@ public class RJsonArrayRequest implements IRequest<JSONArray> {
             return this;
         }
 
-        public RJsonArrayRequest build() {
-            return new RJsonArrayRequest(this);
+        public Builder clazz(Class<T> clazz) {
+            this.clazz = clazz;
+            return this;
+        }
+
+        public RBeanRequest build() {
+            return new RBeanRequest(this);
         }
     }
 }

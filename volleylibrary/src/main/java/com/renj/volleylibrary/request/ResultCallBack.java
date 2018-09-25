@@ -1,4 +1,4 @@
-package com.renj.volleylibrary;
+package com.renj.volleylibrary.request;
 
 import android.support.annotation.NonNull;
 
@@ -17,11 +17,9 @@ import android.support.annotation.NonNull;
  * ======================================================================
  */
 public final class ResultCallBack<T> {
-    private T result;
     private ResultListener resultListener;
 
     private ResultCallBack() {
-
     }
 
     /**
@@ -31,23 +29,23 @@ public final class ResultCallBack<T> {
      * @return {@link ResultCallBack} 对象
      */
     @NonNull
-    public static <T> ResultCallBack<T> create() {
+    static <T> ResultCallBack<T> create() {
         return new ResultCallBack<>();
     }
 
-    public void onResult(@NonNull ResultListener resultListener) {
+    public void onResult(@NonNull ResultListener<T> resultListener) {
         this.resultListener = resultListener;
     }
 
-    public void onSucceed(T result) {
+    void onSucceed(T result) {
         resultListener.onSucceed(result);
     }
 
-    public void onNetWork() {
+    void onNetWork() {
         resultListener.onNetWork();
     }
 
-    public void onError(Throwable e) {
+    void onError(Throwable e) {
         resultListener.onError(e);
     }
 

@@ -25,7 +25,7 @@ import java.util.UUID;
  * <p/>
  * ======================================================================
  */
-public class FormRequest extends Request<String> {
+/*public*/ class FormRequest extends Request<String> {
     private final String BOUNDARY = "------" + UUID.randomUUID().toString(); // 随机生成边界值
     private final String NEW_LINE = "\r\n"; // 换行符
     private final String MULTIPART_FORM_DATA = "multipart/form-data"; // 数据类型

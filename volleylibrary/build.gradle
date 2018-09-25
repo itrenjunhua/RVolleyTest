@@ -33,4 +33,6 @@ dependencies {
     implementation rootProject.ext.dependencies["volley"]
     // gson
     implementation rootProject.ext.dependencies["gson"]
+    // jetbrains
+    implementation rootProject.ext.dependencies["jetbrains"]
 }

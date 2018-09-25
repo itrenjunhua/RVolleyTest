@@ -1,4 +1,4 @@
-package com.renj.volleylibrary.build;
+package com.renj.volleylibrary.request;
 
 import android.support.annotation.NonNull;
 
@@ -6,10 +6,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.renj.volleylibrary.NetWorkUtils;
-import com.renj.volleylibrary.ResultCallBack;
-import com.renj.volleylibrary.VHttpUtil;
 import com.renj.volleylibrary.entity.FileEntity;
-import com.renj.volleylibrary.request.MultipartRequest;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -42,7 +39,7 @@ public class RMultipartRequest implements IRequest<String> {
     public ResultCallBack<String> execute() {
         final ResultCallBack<String> stringResultCallBack = ResultCallBack.<String>create();
 
-        if (!NetWorkUtils.isConnectedByState(VHttpUtil.mContext)) {
+        if (!NetWorkUtils.isConnectedByState(RVHttpUtil.newInstance().getContext())) {
             stringResultCallBack.onNetWork();
             return stringResultCallBack;
         }
@@ -97,7 +94,7 @@ public class RMultipartRequest implements IRequest<String> {
         };
 
         if (builder.tag != null) multipartRequest.setTag(builder.tag);
-        VHttpUtil.mRequestQueue.add(multipartRequest);
+        RVHttpUtil.newInstance().getRequestQueue().add(multipartRequest);
 
         return stringResultCallBack;
     }

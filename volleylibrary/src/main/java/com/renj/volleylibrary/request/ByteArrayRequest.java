@@ -18,7 +18,7 @@ import com.android.volley.toolbox.HttpHeaderParser;
  * <p>
  * ======================================================================
  */
-public class ByteArrayRequest extends Request<byte[]> {
+/*public*/ class ByteArrayRequest extends Request<byte[]> {
     private Response.Listener listener;
 
     public ByteArrayRequest(int method, String url, Response.Listener listener, Response.ErrorListener errorListener) {

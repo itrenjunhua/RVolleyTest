@@ -13,7 +13,6 @@ import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.renj.volleylibrary.NetWorkUtils;
-import com.renj.volleylibrary.ResultListener;
 
 /**
  * ======================================================================
@@ -28,8 +27,8 @@ import com.renj.volleylibrary.ResultListener;
  * <p/>
  * ======================================================================
  */
-public class VImageLoadUtil {
-    private static VImageLoadUtil mVImageLoadUtil;
+public class RVImageLoadUtil {
+    private static RVImageLoadUtil mRVImageLoadUtil;
     private static Context mcContext;
     private static RequestQueue mRequestQueue;
     private static VImageCache mVImageCache;
@@ -41,9 +40,9 @@ public class VImageLoadUtil {
      * @param context
      */
     public static void initImageQueue(Context context) {
-        VImageLoadUtil.mcContext = context;
+        RVImageLoadUtil.mcContext = context;
         if (mRequestQueue == null) {
-            synchronized (VImageLoadUtil.class) {
+            synchronized (RVImageLoadUtil.class) {
                 if (mRequestQueue == null) {
                     mRequestQueue = Volley.newRequestQueue(context);
                     mVImageCache = new VImageCache();
@@ -58,15 +57,15 @@ public class VImageLoadUtil {
      *
      * @return
      */
-    public static VImageLoadUtil newInstance() {
-        if (mVImageLoadUtil == null) {
-            synchronized (VImageLoadUtil.class) {
-                if (mVImageLoadUtil == null) {
-                    mVImageLoadUtil = new VImageLoadUtil();
+    public static RVImageLoadUtil newInstance() {
+        if (mRVImageLoadUtil == null) {
+            synchronized (RVImageLoadUtil.class) {
+                if (mRVImageLoadUtil == null) {
+                    mRVImageLoadUtil = new RVImageLoadUtil();
                 }
             }
         }
-        return mVImageLoadUtil;
+        return mRVImageLoadUtil;
     }
 
     public RequestQueue getRequestQueue() {
@@ -111,7 +110,7 @@ public class VImageLoadUtil {
      * @param listener     网络请求监听
      */
     public void loadImageByRequest(String url, int maxWidth, int maxHeight, Bitmap.Config decodeConfig, final ResultListener<Bitmap> listener) {
-        Log.d("VImageLoadUtil", "NetWorkUtils.getCurrentNetworkState(mcContext):" + NetWorkUtils.getCurrentNetworkState(mcContext));
+        Log.d("RVImageLoadUtil", "NetWorkUtils.getCurrentNetworkState(mcContext):" + NetWorkUtils.getCurrentNetworkState(mcContext));
         if (!NetWorkUtils.isConnectedByState(mcContext)) {
             if (listener != null) {
                 listener.onNetWork();

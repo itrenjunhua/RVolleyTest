@@ -2,8 +2,8 @@ package com.renj.volleytest;
 
 import android.app.Application;
 
-import com.renj.volleylibrary.VHttpUtil;
-import com.renj.volleylibrary.imageloader.VImageLoadUtil;
+import com.renj.volleylibrary.request.RVHttpUtil;
+import com.renj.volleylibrary.imageloader.RVImageLoadUtil;
 
 /**
  * ======================================================================
@@ -24,7 +24,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        VHttpUtil.initRequestQueue(this);
-        VImageLoadUtil.initImageQueue(this);
+        RVHttpUtil.initRequestQueue(this);
+        RVImageLoadUtil.initImageQueue(this);
     }
 }

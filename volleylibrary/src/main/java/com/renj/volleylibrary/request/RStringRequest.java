@@ -1,4 +1,4 @@
-package com.renj.volleylibrary.build;
+package com.renj.volleylibrary.request;
 
 import android.support.annotation.NonNull;
 
@@ -7,8 +7,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.renj.volleylibrary.NetWorkUtils;
-import com.renj.volleylibrary.ResultCallBack;
-import com.renj.volleylibrary.VHttpUtil;
 
 import java.util.Map;
 
@@ -26,7 +24,7 @@ import java.util.Map;
  * <p>
  * ======================================================================
  */
-public class RStringRequest implements IRequest<String>{
+public class RStringRequest implements IRequest<String> {
 
     private Builder builder;
 
@@ -38,7 +36,7 @@ public class RStringRequest implements IRequest<String>{
     public ResultCallBack<String> execute() {
         final ResultCallBack<String> stringResultCallBack = ResultCallBack.<String>create();
 
-        if (!NetWorkUtils.isConnectedByState(VHttpUtil.mContext)) {
+        if (!NetWorkUtils.isConnectedByState(RVHttpUtil.newInstance().getContext())) {
             stringResultCallBack.onNetWork();
             return stringResultCallBack;
         }
@@ -72,12 +70,12 @@ public class RStringRequest implements IRequest<String>{
         };
 
         if (builder.tag != null) stringRequest.setTag(builder.tag);
-        VHttpUtil.mRequestQueue.add(stringRequest);
+        RVHttpUtil.newInstance().getRequestQueue().add(stringRequest);
 
         return stringResultCallBack;
     }
 
-    public static Builder create(){
+    public static Builder create() {
         return new Builder();
     }
 

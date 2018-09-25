@@ -19,6 +19,7 @@ ext {
 
             volley                  : "1.0.0",
             gson                    : "2.2.4",
+            jetbrains               : "15.0",
     ]
 
     dependencies = [
@@ -35,5 +36,7 @@ ext {
             "volley"                  : "com.github.erd:android-volley:${dependVersion.volley}",
             // json
             "gson"                    : "com.google.code.gson:gson:${dependVersion.gson}",
+            // jetbrains
+            "jetbrains"               : "org.jetbrains:annotations-java5:${dependVersion.jetbrains}",
     ]
 }

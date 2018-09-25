@@ -10,8 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.renj.volleylibrary.ResultListenerAdapter;
-import com.renj.volleylibrary.VHttpUtil;
+import com.renj.volleylibrary.request.IRequest;
+import com.renj.volleylibrary.request.RStringRequest;
+import com.renj.volleylibrary.request.ResultCallBack;
 import com.renj.volleytest.R;
 
 import java.util.HashMap;
@@ -48,24 +49,31 @@ public class StringDataActivity extends AppCompatActivity {
 
         Map<String, String> params = new HashMap<>();
         params.put("city", cityName);
-        // VHttpUtil.newInstance().getStringData("https://www.apiopen.top/weatherApi", params, new ResultListenerAdapter<String>() {
-        VHttpUtil.newInstance().getStringData("https://www.apiopen.top/weatherApi?city=" + cityName, new ResultListenerAdapter<String>() {
-            @Override
-            public void onSucceed(String result) {
-                tvContent.setText("onSucceed => " + result);
-                Log.i("StringDataActivity", "onSucceed => " + result);
-            }
 
-            @Override
-            public void onNetWork() {
-                Log.i("StringDataActivity", "onNetWork");
-            }
+        RStringRequest.create()
+                .method(IRequest.Method.GET)
+                .url("https://www.apiopen.top/weatherApi")
+                .params(params)
+                .tag("GetStringData")
+                .build()
+                .execute()
+                .onResult(new ResultCallBack.ResultListener<String>() {
+                    @Override
+                    public void onSucceed(String result) {
+                        tvContent.setText("onSucceed => " + result);
+                        Log.i("StringDataActivity", "onSucceed => " + result);
+                    }
 
-            @Override
-            public void onError(Throwable e) {
-                tvContent.setText("onError => " + e);
-                Log.i("StringDataActivity", "onError => " + e);
-            }
-        });
+                    @Override
+                    public void onNetWork() {
+                        Log.i("StringDataActivity", "onNetWork");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        tvContent.setText("onError => " + e);
+                        Log.i("StringDataActivity", "onError => " + e);
+                    }
+                });
     }
 }
