@@ -11,8 +11,8 @@
 
 ### 2.获取数据或者加载图片
 * 获取 `String` 类型的数据
- 
- 
+     
+         
     Map<String, String> params = new HashMap<>();
     params.put("city", "杭州");
    
