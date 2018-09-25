@@ -90,6 +90,9 @@ public class RJsonArrayRequest implements IRequest<JSONArray> {
         private Map<String, String> headers;
         private Map<String, String> params;
 
+        private Builder() {
+        }
+
         public Builder url(@NonNull String url) {
             this.url = url;
             return this;

@@ -92,6 +92,9 @@ public class RJsonObjectRequest implements IRequest<JSONObject> {
         private Map<String, String> params;
         private JSONObject jsonRequest;
 
+        private Builder() {
+        }
+
         public Builder method(int method) {
             this.method = method;
             return this;

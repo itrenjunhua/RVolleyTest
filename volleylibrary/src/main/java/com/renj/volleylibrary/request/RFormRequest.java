@@ -87,6 +87,9 @@ public class RFormRequest implements IRequest<String> {
         private Charset charSet = Charset.defaultCharset();
         private Map<String, Object> formParams;
 
+        private Builder() {
+        }
+
         public Builder url(@NonNull String url) {
             this.url = url;
             return this;

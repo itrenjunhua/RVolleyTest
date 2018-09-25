@@ -85,6 +85,9 @@ public class RByteArrayRequest implements IRequest<byte[]> {
         private Map<String, String> headers;
         private Map<String, String> params;
 
+        private Builder() {
+        }
+
         public Builder method(int method) {
             this.method = method;
             return this;

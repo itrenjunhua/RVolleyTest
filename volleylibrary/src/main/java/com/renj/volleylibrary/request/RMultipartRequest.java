@@ -113,6 +113,9 @@ public class RMultipartRequest implements IRequest<String> {
         private List<FileEntity> fileEntityList;
         private Charset charSet = Charset.defaultCharset();
 
+        private Builder() {
+        }
+
         public Builder url(@NonNull String url) {
             this.url = url;
             return this;

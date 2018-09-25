@@ -87,6 +87,9 @@ public class RBeanRequest<T extends BaseBean> implements IRequest<T> {
         private Map<String, String> params;
         private Class<T> clazz;
 
+        private Builder() {
+        }
+
         public Builder<T> method(int method) {
             this.method = method;
             return this;
