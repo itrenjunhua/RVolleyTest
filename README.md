@@ -11,36 +11,34 @@
 
 ### 2.获取数据或者加载图片
 * 获取 `String` 类型的数据
-     
-         
-    Map<String, String> params = new HashMap<>();
-    params.put("city", "杭州");
-   
-    RStringRequest.create()
-            .method(IRequest.Method.GET)
-            .url("https://www.apiopen.top/weatherApi")
-            .params(params)
-            .tag("GetStringData")
-            .build()
-            .execute()
-            .onResult(new ResultCallBack.ResultListener<String>() {
-                @Override
-                public void onSucceed(String result) {
-                    tvContent.setText("onSucceed => " + result);
-                    Log.i("StringDataActivity", "onSucceed => " + result);
-                }
-
-                @Override
-                public void onNetWork() {
-                    Log.i("StringDataActivity", "onNetWork");
-                }
-
-                @Override
-                public void onError(Throwable e) {
-                    tvContent.setText("onError => " + e);
-                    Log.i("StringDataActivity", "onError => " + e);
-                }
-            });
+    
+        Map<String, String> params = new HashMap<>();
+        params.put("city", "杭州");
+        RStringRequest.create()
+                .method(IRequest.Method.GET)
+                .url("https://www.apiopen.top/weatherApi")
+                .params(params)
+                .tag("GetStringData")
+                .build()
+                .execute()
+                .onResult(new ResultCallBack.ResultListener<String>() {
+                    @Override
+                    public void onSucceed(String result) {
+                        tvContent.setText("onSucceed => " + result);
+                        Log.i("StringDataActivity", "onSucceed => " + result);
+                    }
+    
+                    @Override
+                    public void onNetWork() {
+                        Log.i("StringDataActivity", "onNetWork");
+                    }
+    
+                    @Override
+                    public void onError(Throwable e) {
+                        tvContent.setText("onError => " + e);
+                        Log.i("StringDataActivity", "onError => " + e);
+                    }
+                });
  
  * 加载图片
     
