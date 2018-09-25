@@ -50,7 +50,7 @@ public class BeanDataActivity extends AppCompatActivity {
 
         Map<String, String> params = new HashMap<>();
         params.put("city", cityName);
-        RBeanRequest.create()
+        RBeanRequest.<WeatherBean>create()
                 .method(IRequest.Method.GET)
                 .url("https://www.apiopen.top/weatherApi")
                 .params(params)

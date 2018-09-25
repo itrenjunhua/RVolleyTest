@@ -20,7 +20,7 @@ import java.util.Map;
  * <p>
  * 创建时间：2018-09-12   15:42
  * <p>
- * 描述：
+ * 描述：获取 {@link JSONObject} 数据请求
  * <p>
  * 修订历史：
  * <p>

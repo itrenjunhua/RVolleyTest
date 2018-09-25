@@ -18,7 +18,7 @@ import java.util.Map;
  * <p>
  * 创建时间：2018-09-12   15:42
  * <p>
- * 描述：
+ * 描述：获取 {@code JavaBean 类型数据请求
  * <p>
  * 修订历史：
  * <p>
@@ -75,8 +75,8 @@ public class RBeanRequest<T extends BaseBean> implements IRequest<T> {
         return beanResultCallBack;
     }
 
-    public static Builder create() {
-        return new Builder();
+    public static <T extends BaseBean> Builder<T> create() {
+        return new Builder<T>();
     }
 
     public static class Builder<T extends BaseBean> {
@@ -87,38 +87,38 @@ public class RBeanRequest<T extends BaseBean> implements IRequest<T> {
         private Map<String, String> params;
         private Class<T> clazz;
 
-        public Builder method(int method) {
+        public Builder<T> method(int method) {
             this.method = method;
             return this;
         }
 
-        public Builder url(@NonNull String url) {
+        public Builder<T> url(@NonNull String url) {
             this.url = url;
             return this;
         }
 
-        public Builder tag(Object tag) {
+        public Builder<T> tag(Object tag) {
             this.tag = tag;
             return this;
         }
 
-        public Builder headers(@NonNull Map<String, String> headers) {
+        public Builder<T> headers(@NonNull Map<String, String> headers) {
             this.headers = headers;
             return this;
         }
 
-        public Builder params(@NonNull Map<String, String> params) {
+        public Builder<T> params(@NonNull Map<String, String> params) {
             this.params = params;
             return this;
         }
 
-        public Builder clazz(Class<T> clazz) {
+        public Builder<T> clazz(Class<T> clazz) {
             this.clazz = clazz;
             return this;
         }
 
-        public RBeanRequest build() {
-            return new RBeanRequest(this);
+        public RBeanRequest<T> build() {
+            return new RBeanRequest<T>(this);
         }
     }
 }

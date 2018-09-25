@@ -3,6 +3,7 @@ package com.renj.volleylibrary;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.annotation.Nullable;
 
 /**
  * ======================================================================
@@ -25,6 +26,7 @@ public class NetWorkUtils {
      * @param context 上下文
      * @return 当前网络的状态。具体类型可参照NetworkInfo.State.CONNECTED、NetworkInfo.State.CONNECTED.DISCONNECTED等字段。当前没有网络连接时返回null
      */
+    @Nullable
     public static NetworkInfo.State getCurrentNetworkState(Context context) {
         NetworkInfo networkInfo
                 = ((ConnectivityManager) context.getSystemService(

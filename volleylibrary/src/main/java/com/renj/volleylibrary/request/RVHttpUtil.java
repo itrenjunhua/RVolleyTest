@@ -13,13 +13,7 @@ import com.android.volley.toolbox.Volley;
  * <p/>
  * 创建时间：2017-02-03    10:49
  * <p/>
- * 描述：<b>Volley网络请求工具类</b><br/>
- * 1.提供通过GET或POST方式，或者指定其他的请求方式获取byte[]类型、String类型、JsonObject类型、JsonArray类型和JavaBean类型的数据；<br/>
- * 2.使用POST方式提交表单数据；<br/>
- * 4.支持指定提交数据的编码；<br/>
- * 3.使用POST方式提交表单数据和文件(单个文件或者多个文件)；<br/>
- * 5.支持设置Tag和取消网络请求。<br/>
- * 如果需要设置Header、Cookie等信息需要另外扩展
+ * 描述：Volley网络请求工具类
  * <p/>
  * 修订历史：
  * <p/>

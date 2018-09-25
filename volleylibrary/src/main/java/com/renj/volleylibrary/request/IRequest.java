@@ -7,7 +7,7 @@ package com.renj.volleylibrary.request;
  * <p>
  * 创建时间：2018-09-16   18:09
  * <p>
- * 描述：
+ * 描述：请求超类接口
  * <p>
  * 修订历史：
  * <p>
