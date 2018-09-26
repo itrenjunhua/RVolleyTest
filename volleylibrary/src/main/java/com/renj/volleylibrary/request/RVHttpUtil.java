@@ -1,6 +1,7 @@
 package com.renj.volleylibrary.request;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -76,7 +77,8 @@ public class RVHttpUtil {
      *
      * @param tag
      */
-    public void cancelAll(Object tag) {
+    public void cancelAll(@NonNull Object tag) {
+        if (tag == null) return;
         mRequestQueue.cancelAll(tag);
     }
 
